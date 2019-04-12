@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+    constructor(private renderer: Renderer) {
+        this.renderer.setElementClass(document.body, 'bg-gradient-primary', true);
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+
+    }
+
+    ngOnDestroy() {
+        this.renderer.setElementClass(document.body, 'bg-gradient-primary', false);
+    }
 
 }

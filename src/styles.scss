@@ -1,0 +1,19 @@
+@import './utilities/scss/variables';
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+@import "./utilities/scss/mixins";
+@import "./utilities/scss/global.scss";
+@import "./utilities/scss/utilities.scss";
+
+@import "./utilities/navs/global.scss";
+@import "./utilities/navs/topbar.scss";
+@import "./utilities/navs/sidebar.scss";
+
+@import "./utilities/scss/dropdowns.scss";
+@import "./utilities/scss/navs.scss";
+@import "./utilities/scss/buttons.scss";
+@import "./utilities/scss/cards.scss";
+@import "./utilities/scss/charts.scss";
+@import "./utilities/scss/login.scss";
+@import "./utilities/scss/error.scss";
+@import "./utilities/scss/footer.scss";
