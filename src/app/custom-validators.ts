@@ -2,6 +2,8 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 
 export class CustomValidators {
 
+    static requestsUrl : string = "localhost:3000";
+
     static verifyPassword(group: FormGroup) {
         let password = group.controls.password.value;
         let confirmPassword = group.controls.verifyPassword.value;

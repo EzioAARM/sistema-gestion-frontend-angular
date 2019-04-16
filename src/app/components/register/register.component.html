@@ -14,6 +14,9 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Crea una cuenta</h1>
                                 </div>
+                                <div class="alert alert-danger" role="alert">
+                                    El usuario ya existe
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form class="user" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -56,7 +59,8 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-12 mb-3 mb-sm-0">
-                                                    <input type="password" class="form-control form-control-user" id="verifyPassword" placeholder="Verifica la contraseña" formControlName="verifyPassword">
+                                                    <input type="password" class="form-control form-control-user" id="verifyPassword" placeholder="Verifica la contraseña" formControlName="verifyPassword" (input)="showVerifyPasswordError($event.target.value)">
+                                                    <div class="text-danger" id="samePasswords"><small><span class="fas fa-times" id="iconSamePasswords"></span> Las contraseñas coinciden</small></div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">

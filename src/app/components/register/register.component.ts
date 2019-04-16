@@ -1,14 +1,16 @@
-import { Component, OnInit, Renderer, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { CustomValidators } from '../custom-validators';
-import { log } from 'util';
+import { Component, Renderer, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidators } from '../../custom-validators';
+import { User } from 'src/app/models/User.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  providers: [UserService]
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnDestroy {
 
     registerForm = new FormGroup({
         name: new FormControl('', [Validators.required]),
@@ -19,12 +21,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
         verifyPassword: new FormControl('', [Validators.required])
     }, [CustomValidators.verifyPassword]);
 
-    constructor(private renderer: Renderer) {
+    constructor(private renderer: Renderer, 
+        private _userService : UserService) {
         this.renderer.setElementClass(document.body, 'bg-gradient-primary', true);
-    }
-
-    ngOnInit() {
-
     }
 
     ngOnDestroy() {
@@ -32,12 +31,35 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        console.log(this.registerForm.value);
+        let user = new User(
+                this.registerForm.controls.name.value,
+                this.registerForm.controls.lastName.value,
+                this.registerForm.controls.email.value,
+                this.registerForm.controls.username.value,
+                this.registerForm.controls.password.value
+            );
+        this._userService.registerUser(user).subscribe(
+            response => {
+                // save token and send activation email.
+            }, error => {
+                // show errors
+            }
+        );
     }
 
     changeClass(elementId : string, toRemove : string, toAdd : string) {
         (document.getElementById(elementId) as HTMLElement).classList.remove(toRemove);
         (document.getElementById(elementId) as HTMLElement).classList.add(toAdd);
+    }
+
+    showVerifyPasswordError() {
+        if (this.registerForm.controls.password.value === this.registerForm.controls.verifyPassword.value) {
+            this.changeClass('samePasswords', 'text-danger', 'text-success');
+            this.changeClass('iconSamePasswords', 'fa-times', 'fa-check');
+        } else {
+            this.changeClass('samePasswords', 'text-success', 'text-danger');
+            this.changeClass('iconSamePasswords', 'fa-check', 'fa-times');
+        }
     }
 
     onChangedPassword(passwordData : string) {
@@ -95,7 +117,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }
         if (passwordNumber === 10) {
             this.changeClass('containNumber', 'text-danger', 'text-success');
-            this.changeClass('iconNumber', 'fa-times', 'fa-check');
         } else {
             this.changeClass('containNumber', 'text-success', 'text-danger');
             this.changeClass('iconNumber', 'fa-check', 'fa-times');
@@ -113,5 +134,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.changeClass('progressBarPassword', 'bg-gradient-danger', 'bg-gradient-success');
             this.changeClass('progressBarPassword', 'bg-gradient-warning', 'bg-gradient-success');
         }
+        this.showVerifyPasswordError();
     }
 }
