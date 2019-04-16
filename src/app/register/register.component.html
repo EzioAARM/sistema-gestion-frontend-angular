@@ -1,47 +1,69 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="p-5">
                                 <div class="text-center">
+                                    <img src="" alt="logo">
+                                </div>
+                                <hr>
+                                <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Crea una cuenta</h1>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <form class="user">
+                                        <form class="user" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <input type="text" class="form-control form-control-user" id="firstName" placeholder="Nombre">
+                                                    <input type="text" class="form-control form-control-user" id="firstName" placeholder="Nombre" formControlName="name">
                                                 </div>
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <input type="text" class="form-control form-control-user" id="lastName" placeholder="Apellido">
+                                                    <input type="text" class="form-control form-control-user" id="lastName" placeholder="Apellido" formControlName="lastName">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-12 mb-3 mb-sm-0">
-                                                    <input type="email" class="form-control form-control-user" id="email" placeholder="Correo electrónico">
+                                                    <input type="email" class="form-control form-control-user" id="email" placeholder="Correo electrónico" formControlName="email">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-12 mb-3 mb-sm-0">
-                                                    <input type="text" class="form-control form-control-user" id="username" placeholder="Nombre de usuario">
+                                                    <input type="text" class="form-control form-control-user" id="username" placeholder="Nombre de usuario" formControlName="username">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-12 mb-3 mb-sm-0">
-                                                    <input type="password" class="form-control form-control-user" id="password" placeholder="Contraseña">
+                                                    <input type="password" class="form-control form-control-user" id="password" placeholder="Contraseña" formControlName="password" (input)="onChangedPassword($event.target.value)"> 
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-12 mb-3 mb-sm-0">
-                                                    <input type="password" class="form-control form-control-user" id="verifyPassword" placeholder="Verifica la contraseña">
+                                                    Seguridad de la contraseña
+                                                    <div class="progress progress-sm mb-2">
+                                                        <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 0%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" id="progressBarPassword"></div>
+                                                    </div>
+                                                    <small>
+                                                        <div class="text-danger" id="containUpper"><span class="fas fa-times" id="iconUpper"></span> Al menos una letra mayuscula</div>
+                                                        <div class="text-danger" id="containLower"><span class="fas fa-times" id="iconLower"></span> Al menos una letra minuscula</div>
+                                                        <div class="text-danger" id="containNumber"><span class="fas fa-times" id="iconNumber"></span> Al menos un número</div>
+                                                        <div class="text-danger" id="enoughLenght"><span class="fas fa-times" id="iconLenght"></span> Al menos 10 caracteres</div> 
+                                                    </small>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3"></div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                                    <input type="password" class="form-control form-control-user" id="verifyPassword" placeholder="Verifica la contraseña" formControlName="verifyPassword">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Crear mi cuenta" [disabled]="!registerForm.valid">
+                                                </div>
+                                            </div>
                                         </form>
                                         <hr>
                                         <div class="text-center">
@@ -56,6 +78,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-3"></div>
     </div>
 </div>
