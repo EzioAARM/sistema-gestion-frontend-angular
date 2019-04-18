@@ -29,4 +29,13 @@ export class UserService {
             headers: headers
         });
     }
+
+    loginUser(username : string, password : string) {
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+        return this._http.get<Token>(this.url + "/users/login/" + username + "/" + password, {
+            headers: headers
+        });
+    }
 }

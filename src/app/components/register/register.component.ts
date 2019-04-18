@@ -26,9 +26,6 @@ export class RegisterComponent implements OnDestroy {
         private _userService : UserService,
         private router : Router) {
         this.renderer.setElementClass(document.body, 'bg-gradient-primary', true);
-        if (localStorage.getItem('token')) {
-            this.router.navigate(['']);
-        }
     }
 
     ngOnDestroy() {
@@ -68,6 +65,8 @@ export class RegisterComponent implements OnDestroy {
                         (document.getElementById('errorMessage') as HTMLElement).innerHTML = "El usuario ya fue dado de baja";
                     else if (error.error.message == "ALREADY_EXISTS")
                         (document.getElementById('errorMessage') as HTMLElement).innerHTML = "El usuario ya existe, <a href='#'>¡inicia sesión aquí!</a>";
+                    else
+                        (document.getElementById('errorMessage') as HTMLElement).innerHTML = "Hubo un error inesperado";
                 }
             }
         );

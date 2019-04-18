@@ -8,13 +8,17 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { notVerifiedComponent } from './components/notVerified/notVerified.component';
+import { recoverPasswordComponent } from './components/recoverPassword/recoverPassword.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    LayoutComponent
+    LayoutComponent,
+    notVerifiedComponent,
+    recoverPasswordComponent
   ],
   imports: [
     BrowserModule,

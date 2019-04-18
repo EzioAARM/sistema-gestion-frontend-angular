@@ -30,22 +30,16 @@
                                                     <input type="password" class="form-control form-control-user" id="password" placeholder="Contraseña" formControlName="password">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox small">
-                                                    <input type="checkbox" class="custom-control-input" id="rememberMe">
-                                                    <label class="custom-control-label" for="rememberMe">Mantener mi sesión abierta</label>
-                                                </div>
-                                            </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-12 mb-3 mb-sm-0">
-                                                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Iniciar sesión" [disabled]="!registerForm.valid">
+                                                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Iniciar sesión" [disabled]="!loginForm.valid">
                                                 </div>
                                             </div>
                                         </form>
                                         <hr>
                                         <div class="text-center">
-                                            <a href="#">¿Olvidaste tu contraseña?</a><br>
-                                            <a href="#">Aún no tengo cuenta</a>
+                                            <a [routerLink]="['/recover-password']" routerLinkActive="active">¿Olvidaste tu contraseña?</a><br>
+                                            <a [routerLink]="['/register']" routerLinkActive="active">Aún no tengo cuenta</a>
                                         </div>
                                     </div>
                                 </div>
