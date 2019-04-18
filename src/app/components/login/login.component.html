@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <img src="" alt="logo">
+                                </div>
+                                <hr>
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Iniciar sesión</h1>
+                                </div>
+                                <div id="errorMessage">
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form class="user" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                                    <input type="text" class="form-control form-control-user" id="username" placeholder="Nombre de usuario" formControlName="username">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                                    <input type="password" class="form-control form-control-user" id="password" placeholder="Contraseña" formControlName="password">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox small">
+                                                    <input type="checkbox" class="custom-control-input" id="rememberMe">
+                                                    <label class="custom-control-label" for="rememberMe">Mantener mi sesión abierta</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Iniciar sesión" [disabled]="!registerForm.valid">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr>
+                                        <div class="text-center">
+                                            <a href="#">¿Olvidaste tu contraseña?</a><br>
+                                            <a href="#">Aún no tengo cuenta</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

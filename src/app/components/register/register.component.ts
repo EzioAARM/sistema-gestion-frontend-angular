@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '../../custom-validators';
 import { User } from 'src/app/models/User.model';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -22,8 +23,12 @@ export class RegisterComponent implements OnDestroy {
     }, [CustomValidators.verifyPassword]);
 
     constructor(private renderer: Renderer, 
-        private _userService : UserService) {
+        private _userService : UserService,
+        private router : Router) {
         this.renderer.setElementClass(document.body, 'bg-gradient-primary', true);
+        if (localStorage.getItem('token')) {
+            this.router.navigate(['']);
+        }
     }
 
     ngOnDestroy() {
@@ -40,9 +45,30 @@ export class RegisterComponent implements OnDestroy {
             );
         this._userService.registerUser(user).subscribe(
             response => {
-                // save token and send activation email.
+                console.log("logeado correctamente");
+                (document.getElementById('errorMessage') as HTMLElement).classList.add('alert');
+                (document.getElementById('errorMessage') as HTMLElement).classList.add('alert-success');
+                (document.getElementById('errorMessage') as HTMLElement).innerHTML = "Su usuario fue registrado con éxito, redirigiendo a la página de inicio de sesión";
+                setTimeout(() => {
+                    this.router.navigate(['login'])
+                }, 3000);
             }, error => {
-                // show errors
+                (document.getElementById('errorMessage') as HTMLElement).classList.add('alert');
+                (document.getElementById('errorMessage') as HTMLElement).classList.add('alert-danger');
+                if (error.status == 503) {
+                    (document.getElementById('errorMessage') as HTMLElement).innerHTML = "Hubo un error inesperado";
+                } else if (error.status == 409) {
+                    if (error.error.message == "EMAIL_ALREADY_EXISTS")
+                        (document.getElementById('errorMessage') as HTMLElement).innerHTML = "El correo electrónico ya está en uso";
+                    else if (error.error.message == "USERNAME_ALREADY_EXISTS")
+                        (document.getElementById('errorMessage') as HTMLElement).innerHTML = "El nombre de usuario ya está en uso";
+                    else if (error.error.message == "NOT_ACTIVATED")
+                        (document.getElementById('errorMessage') as HTMLElement).innerHTML = "La cuenta existe pero no ha sido activada, <a href='#'>¡inicia sesión aquí!</a>";
+                    else if (error.error.message == "INACTIVE")
+                        (document.getElementById('errorMessage') as HTMLElement).innerHTML = "El usuario ya fue dado de baja";
+                    else if (error.error.message == "ALREADY_EXISTS")
+                        (document.getElementById('errorMessage') as HTMLElement).innerHTML = "El usuario ya existe, <a href='#'>¡inicia sesión aquí!</a>";
+                }
             }
         );
     }
@@ -53,12 +79,14 @@ export class RegisterComponent implements OnDestroy {
     }
 
     showVerifyPasswordError() {
-        if (this.registerForm.controls.password.value === this.registerForm.controls.verifyPassword.value) {
-            this.changeClass('samePasswords', 'text-danger', 'text-success');
-            this.changeClass('iconSamePasswords', 'fa-times', 'fa-check');
-        } else {
-            this.changeClass('samePasswords', 'text-success', 'text-danger');
-            this.changeClass('iconSamePasswords', 'fa-check', 'fa-times');
+        if (this.registerForm.controls.password.value != "" || this.registerForm.controls.verifyPassword.value != "") {
+            if (this.registerForm.controls.password.value === this.registerForm.controls.verifyPassword.value) {
+                this.changeClass('samePasswords', 'text-danger', 'text-success');
+                this.changeClass('iconSamePasswords', 'fa-times', 'fa-check');
+            } else {
+                this.changeClass('samePasswords', 'text-success', 'text-danger');
+                this.changeClass('iconSamePasswords', 'fa-check', 'fa-times');
+            }
         }
     }
 
@@ -117,6 +145,7 @@ export class RegisterComponent implements OnDestroy {
         }
         if (passwordNumber === 10) {
             this.changeClass('containNumber', 'text-danger', 'text-success');
+            this.changeClass('iconNumber', 'fa-times', 'fa-check');
         } else {
             this.changeClass('containNumber', 'text-success', 'text-danger');
             this.changeClass('iconNumber', 'fa-check', 'fa-times');
